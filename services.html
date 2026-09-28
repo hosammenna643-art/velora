@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Services</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:'Segoe UI', sans-serif;
+padding-top:70px;
+transition:0.4s;
+}
+
+/* COLORS */
+:root{
+--main:#8c6b1f;
+--light:#b8962e;
+}
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+top:0;right:0;left:0;
+height:70px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+z-index:9999;
+}
+
+.nav-left,.nav-center,.nav-right{
+display:flex;
+align-items:center;
+}
+
+.nav-center{gap:25px;}
+
+.menu{
+display:flex;
+gap:25px;
+}
+
+.menu a{
+text-decoration:none;
+color:#000;
+font-weight:700;
+position:relative;
+}
+
+.menu a::after{
+content:"";
+position:absolute;
+right:0;
+bottom:-5px;
+width:0%;
+height:2px;
+background:var(--main);
+transition:0.3s;
+}
+
+.menu a:hover{color:var(--main);}
+.menu a:hover::after{width:100%;}
+
+.menu-btn{
+display:none;
+font-size:28px;
+cursor:pointer;
+}
+
+/* LOGO */
+.logo{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.logo img{height:45px;}
+
+.logo span{
+font-size:22px;
+font-weight:700;
+font-family:'Playfair Display', serif;
+color:var(--main);
+}
+
+/* SWITCH */
+.switch{
+display:flex;
+align-items:center;
+cursor:pointer;
+}
+
+.switch input{display:none;}
+
+.slider{
+width:60px;
+height:28px;
+background:#ccc;
+border-radius:50px;
+position:relative;
+transition:0.4s;
+}
+
+.slider::before{
+content:"☀️";
+position:absolute;
+width:24px;
+height:24px;
+top:2px;
+right:2px;
+border-radius:50%;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+transition:0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.switch input:checked + .slider{
+background:linear-gradient(45deg,#8c6b1f,#b8962e);
+}
+
+.switch input:checked + .slider::before{
+transform:translateX(-32px) rotate(360deg);
+content:"🌙";
+background:#111;
+color:#fff;
+}
+
+/* DARK MODE */
+body.dark{
+background:#121212;
+color:#fff;
+}
+
+body.dark .navbar{background:#1e1e1e;}
+body.dark .menu a{color:#fff;}
+body.dark .menu a:hover{color:var(--light);}
+body.dark .card{background:#1e1e1e;border:1px solid #333;}
+body.dark .card p{color:#ccc;}
+body.dark .subtitle{color:#ccc;}
+
+/* TITLE */
+h1{
+display:inline-block;
+margin:40px auto 10px;
+color:var(--main);
+font-size:42px;
+letter-spacing:2px;
+font-family:'Playfair Display', serif;
+animation:fadeUp 1s ease;
+transition:0.3s;
+}
+
+h1::after{
+content:"";
+width:60px;height:2px;
+background:var(--main);
+display:block;
+margin:10px auto;
+transition:0.4s;
+}
+
+h1:hover{
+transform:scale(1.05);
+color:var(--light);
+}
+
+h1:hover::after{width:220px;}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.subtitle{
+text-align:center;
+color:#555;
+margin-bottom:50px;
+}
+
+/* SECTIONS */
+.section_title{
+text-align:center;
+color:var(--main);
+font-size:28px;
+margin:60px 0 30px;
+font-family:'Playfair Display', serif;
+}
+
+/* GRID */
+.services{
+width:90%;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+margin-bottom:60px;
+}
+
+/* CARD */
+.card{
+background:#fff;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+transition:0.4s;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.card-content{
+padding:20px;
+text-align:center;
+}
+
+.card-content h3{
+color:var(--main);
+margin-bottom:10px;
+}
+
+.card-content p{color:#555;}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.menu{
+position:fixed;
+top:70px;
+right:-100%;
+flex-direction:column;
+width:220px;
+height:100vh;
+padding:20px;
+background:#fff;
+transition:0.3s;
+}
+
+.menu.active{right:0;}
+
+.menu-btn{display:block;}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="nav-left">
+<label class="switch">
+<input type="checkbox" id="darkToggle">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="nav-center">
+<nav class="menu">
+<a href="index.html">الرئيسية</a>
+<a href="rooms.html">الغرف</a>
+<a href="services.html">الخدمات</a>
+<a href="booking.html">الحجز</a>
+<a href="reviews.html">آراء العملاء</a>
+<a href="contact.html">تواصل معنا</a>
+</nav>
+</div>
+
+<div class="nav-right">
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<div class="logo">
+<img src="logo.png">
+<span>VELORA HOTEL</span>
+</div>
+</div>
+
+</header>
+
+<div style="text-align:center;">
+<h1>Velora Services</h1>
+</div>
+
+<p class="subtitle">نوفر لك تجربة إقامة مريحة ومميزة مع أفضل الخدمات</p>
+
+<h2 class="section_title">خدمات أساسية</h2>
+
+<div class="services">
+
+<div class="card">
+<img src="images/reception.jpg">
+<div class="card-content">
+<h3>استقبال 24 ساعة</h3>
+<p>فريقنا متواجد طوال اليوم لخدمتك</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/housekeeping.jpg">
+<div class="card-content">
+<h3>خدمة النظافة</h3>
+<p>نظافة يومية لغرفك بأعلى جودة</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/wifi.jpg">
+<div class="card-content">
+<h3>واي فاي مجاني</h3>
+<p>إنترنت سريع في جميع أنحاء الفندق</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/parking.jpg">
+<div class="card-content">
+<h3>موقف سيارات</h3>
+<p>موقف آمن لسيارتك طوال الإقامة</p>
+</div>
+</div>
+
+</div>
+
+<h2 class="section_title">خدمات ترفيهية</h2>
+
+<div class="services">
+
+<div class="card">
+<img src="images/restaurant.jpg">
+<div class="card-content">
+<h3>المطعم</h3>
+<p>أطباق عالمية على أعلى مستوى</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/pool.jpg">
+<div class="card-content">
+<h3>حمام السباحة</h3>
+<p>استرخاء وتجربة مميزة</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/gym.jpg">
+<div class="card-content">
+<h3>الجيم</h3>
+<p>أحدث الأجهزة الرياضية</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/spa.jpeg">
+<div class="card-content">
+<h3>السبا</h3>
+<p>استرخاء وتجديد طاقة</p>
+</div>
+</div>
+
+</div>
+
+<h2 class="section_title">خدمات إضافية</h2>
+
+<div class="services">
+
+<div class="card">
+<img src="images/shuttle.jpg">
+<div class="card-content">
+<h3>نقل من وإلى المطار</h3>
+<p>خدمة مريحة وسريعة</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/car.jpg">
+<div class="card-content">
+<h3>تأجير سيارات</h3>
+<p>سيارات فاخرة بأسعار مناسبة</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/trips.jpg">
+<div class="card-content">
+<h3>تنظيم رحلات</h3>
+<p>جولات سياحية ممتعة</p>
+</div>
+</div>
+
+<div class="card">
+<img src="images/kids.jpg">
+<div class="card-content">
+<h3>منطقة أطفال</h3>
+<p>أمان وترفيه للأطفال</p>
+</div>
+</div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const toggle = document.getElementById("darkToggle");
+
+if(localStorage.getItem("theme")==="dark"){
+document.body.classList.add("dark");
+toggle.checked=true;
+}
+
+toggle.addEventListener("change", function(){
+if(this.checked){
+document.body.classList.add("dark");
+localStorage.setItem("theme","dark");
+}else{
+document.body.classList.remove("dark");
+localStorage.setItem("theme","light");
+}
+});
+
+});
+
+function toggleMenu(){
+document.querySelector(".menu").classList.toggle("active");
+}
+
+</script>
+
+</body>
+</html>

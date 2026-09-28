@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Rooms</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+/* COLORS */
+:root{
+--main:#8c6b1f;
+--light:#b8962e;
+}
+
+body{
+font-family:'Segoe UI', sans-serif;
+padding-top:70px;
+overflow-x:hidden;
+}
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+top:0;
+right:0;
+left:0;
+height:70px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+z-index:9999;
+}
+
+.nav-left,.nav-center,.nav-right{
+display:flex;
+align-items:center;
+}
+
+.nav-center{
+gap:25px;
+}
+
+.menu{
+display:flex;
+gap:25px;
+}
+
+.menu a{
+text-decoration:none;
+color:#000;
+font-weight:700;
+position:relative;
+}
+
+.menu a::after{
+content:"";
+position:absolute;
+right:0;
+bottom:-5px;
+width:0%;
+height:2px;
+background:var(--main);
+transition:0.3s;
+}
+
+.menu a:hover{
+color:var(--main);
+}
+
+.menu a:hover::after{
+width:100%;
+}
+
+.menu-btn{
+display:none;
+font-size:28px;
+cursor:pointer;
+}
+
+/* LOGO */
+.logo{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.logo img{
+height:45px;
+}
+
+.logo span{
+font-size:22px;
+font-weight:700;
+font-family:'Playfair Display', serif;
+color:var(--main);
+}
+
+/* SWITCH */
+.switch{
+display:flex;
+align-items:center;
+cursor:pointer;
+}
+
+.switch input{
+display:none;
+}
+
+.slider{
+width:60px;
+height:28px;
+background:#ccc;
+border-radius:50px;
+position:relative;
+transition:0.4s;
+}
+
+.slider::before{
+content:"☀️";
+position:absolute;
+width:24px;
+height:24px;
+top:2px;
+right:2px;
+border-radius:50%;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+transition:0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.switch input:checked + .slider{
+background:linear-gradient(45deg,#8c6b1f,#b8962e);
+}
+
+.switch input:checked + .slider::before{
+transform:translateX(-32px) rotate(360deg);
+content:"🌙";
+background:#111;
+color:#fff;
+}
+
+/* DARK MODE */
+body.dark{
+background:#121212;
+color:#fff;
+}
+
+body.dark .navbar{
+background:#1e1e1e;
+}
+
+body.dark .menu a{
+color:#fff;
+}
+
+body.dark .room-card{
+background:#1e1e1e;
+border:1px solid #333;
+}
+
+body.dark .room-card p{
+color:#ccc;
+}
+
+/* SECTION */
+.rooms-section{
+text-align:center;
+margin-top:40px;
+}
+
+/* 🔥 TITLE ANIMATION */
+h1{
+display:inline-block;
+margin:40px auto 10px;
+font-size:42px;
+font-family:'Playfair Display', serif;
+color:var(--main);
+letter-spacing:2px;
+position:relative;
+animation:fadeUp 1s ease;
+transition:0.3s;
+}
+
+h1::after{
+content:"";
+width:60px;
+height:2px;
+background:var(--main);
+display:block;
+margin:10px auto;
+transition:0.4s;
+}
+
+h1:hover{
+transform:scale(1.05);
+color:var(--light);
+}
+
+h1:hover::after{
+width:220px;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* ROOMS */
+.rooms-container{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+padding:20px 40px;
+}
+
+.room-card{
+background:#fff;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+transition:0.4s;
+}
+
+.room-card:hover{
+transform:translateY(-10px) scale(1.03);
+}
+
+.room-card img{
+width:100%;
+height:240px;
+object-fit:cover;
+}
+
+.room-card h3{
+margin-top:12px;
+color:var(--main);
+}
+
+.room-card p{
+color:#555;
+padding:0 12px;
+}
+
+.price{
+color:var(--main);
+font-weight:bold;
+margin:10px 0;
+}
+
+.btn{
+display:inline-block;
+padding:10px 22px;
+background:var(--main);
+color:#fff;
+border-radius:6px;
+text-decoration:none;
+margin-bottom:15px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.menu{
+position:fixed;
+top:70px;
+right:-100%;
+flex-direction:column;
+width:220px;
+height:100vh;
+padding:20px;
+background:#fff;
+transition:0.3s;
+}
+
+.menu.active{
+right:0;
+}
+
+.menu-btn{
+display:block;
+}
+
+.rooms-container{
+grid-template-columns:1fr;
+}
+
+h1{
+font-size:32px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="nav-left">
+<label class="switch">
+<input type="checkbox" id="darkToggle">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="nav-center">
+<nav class="menu">
+<a href="index.html">الرئيسية</a>
+<a href="rooms.html">الغرف</a>
+<a href="services.html">الخدمات</a>
+<a href="booking.html">الحجز</a>
+<a href="reviews.html">آراء العملاء</a>
+<a href="contact.html">تواصل معنا</a>
+</nav>
+</div>
+
+<div class="nav-right">
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<div class="logo">
+<img src="logo.png">
+<span>VELORA HOTEL</span>
+</div>
+</div>
+
+</header>
+
+<section class="rooms-section">
+
+<h1>Velora Rooms</h1>
+
+<div class="rooms-container">
+
+<div class="room-card">
+<img src="Room/room1.jpeg">
+<h3>غرفة مزدوجة كلاسيك</h3>
+<p>غرفة مريحة مثالية للأزواج</p>
+<div class="price">95 / الليلة</div>
+<a href="booking.html" class="btn">الحجز</a>
+</div>
+
+<div class="room-card">
+<img src="Room/room2.jpeg">
+<h3>غرفة بريميوم</h3>
+<p>إضاءة دافئة وسرير فاخر</p>
+<div class="price">110 / الليلة</div>
+<a href="booking.html" class="btn">الحجز</a>
+</div>
+
+<div class="room-card">
+<img src="Room/room3.jpeg">
+<h3>غرفة فاخرة</h3>
+<p>تصميم حديث وأنيق</p>
+<div class="price">120 / الليلة</div>
+<a href="booking.html" class="btn">الحجز</a>
+</div>
+
+<div class="room-card">
+<img src="Room/room4.jpeg">
+<h3>غرفة عائلية</h3>
+<p>مثالية للعائلات</p>
+<div class="price">150 / الليلة</div>
+<a href="booking.html" class="btn">الحجز</a>
+</div>
+
+<div class="room-card">
+<img src="Room/room5.jpeg">
+<h3>جناح مميز</h3>
+<p>شرفة خاصة</p>
+<div class="price">180 / الليلة</div>
+<a href="booking.html" class="btn">الحجز</a>
+</div>
+
+<div class="room-card">
+<img src="Room/room6.jpeg">
+<h3>الجناح الملكي</h3>
+<p>إطلالة فاخرة ومساحة كبيرة</p>
+<div class="price">250 / الليلة</div>
+<a href="booking.html" class="btn">الحجز</a>
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const toggle = document.getElementById("darkToggle");
+
+if(localStorage.getItem("theme")==="dark"){
+document.body.classList.add("dark");
+toggle.checked=true;
+}
+
+toggle.addEventListener("change", function(){
+if(this.checked){
+document.body.classList.add("dark");
+localStorage.setItem("theme","dark");
+}else{
+document.body.classList.remove("dark");
+localStorage.setItem("theme","light");
+}
+});
+
+});
+
+function toggleMenu(){
+document.querySelector(".menu").classList.toggle("active");
+}
+
+</script>
+
+</body>
+</html>
