@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Reviews</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+--main:#8c6b1f;
+--light:#b8962e;
+}
+
+body{
+font-family:'Segoe UI', Tahoma, sans-serif;
+background:#f8f8f8;
+padding-top:90px;
+transition:0.4s;
+}
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+top:0;right:0;left:0;
+height:70px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+z-index:9999;
+}
+
+.nav-left,.nav-center,.nav-right{
+display:flex;
+align-items:center;
+}
+
+.menu{display:flex;gap:25px;}
+
+.menu a{
+text-decoration:none;
+color:#000;
+font-weight:700;
+position:relative;
+}
+
+.menu a::after{
+content:"";
+position:absolute;
+right:0;
+bottom:-5px;
+width:0%;
+height:2px;
+background:var(--main);
+transition:0.3s;
+}
+
+.menu a:hover{color:var(--main);}
+.menu a:hover::after{width:100%;}
+
+.menu-btn{display:none;font-size:28px;cursor:pointer;}
+
+.logo{display:flex;align-items:center;gap:8px;}
+.logo img{height:45px;}
+
+.logo span{
+font-size:22px;
+font-family:'Playfair Display', serif;
+color:var(--main);
+}
+
+/* DARK SWITCH */
+.switch input{display:none;}
+
+.slider{
+width:60px;height:28px;background:#ccc;border-radius:50px;position:relative;
+}
+
+.slider::before{
+content:"☀️";
+position:absolute;
+width:24px;height:24px;top:2px;right:2px;
+background:#fff;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+transition:0.4s;
+}
+
+.switch input:checked + .slider{
+background:linear-gradient(45deg,#8c6b1f,#b8962e);
+}
+
+.switch input:checked + .slider::before{
+transform:translateX(-32px);
+content:"🌙";
+}
+
+/* DARK MODE */
+body.dark{
+background:#121212;
+color:#fff;
+}
+
+body.dark .navbar{background:#1e1e1e;}
+body.dark .menu a{color:#fff;}
+body.dark .review-card{background:#1e1e1e;}
+body.dark .add-review{background:#1e1e1e;}
+
+/* TITLE */
+.title{
+font-size:42px;
+color:var(--main);
+font-family:'Playfair Display', serif;
+display:inline-block;
+position:relative;
+transition:0.3s;
+}
+
+/* السطر */
+.title::after{
+content:"";
+width:80px;
+height:2px;
+background:var(--main);
+display:block;
+margin:10px auto;
+transition:0.4s;
+}
+
+/* الحركة */
+.title:hover{
+transform:scale(1.05);
+}
+
+.title:hover::after{
+width:220px;
+}
+.title-wrapper{
+text-align:center;
+margin-top:30px;
+}
+@keyframes fadeUp{
+from{opacity:0; transform:translateY(30px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+.title{
+animation:fadeUp 1s ease;
+}
+/* GRID */
+.reviews-container{
+width:90%;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+/* CARD */
+.review-card{
+background:#fff;
+padding:20px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+.reviews-text{
+text-align:center;
+color:#666;
+margin:10px auto 40px;
+max-width:600px;
+}
+.stars{color:var(--light);}
+
+/* FORM */
+.add-review{
+width:90%;
+margin:40px auto;
+background:#fff;
+padding:25px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.add-review input,
+.add-review textarea,
+.add-review select{
+width:100%;
+margin:10px 0;
+padding:10px;
+border:1px solid #ddd;
+border-radius:6px;
+}
+
+.add-review button{
+background:var(--main);
+color:#fff;
+border:none;
+padding:10px;
+width:100%;
+cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.reviews-container{grid-template-columns:1fr;}
+
+.menu{
+position:fixed;
+top:70px;
+right:-100%;
+flex-direction:column;
+width:220px;
+height:100vh;
+background:#fff;
+padding:20px;
+transition:0.3s;
+}
+
+.menu.active{right:0;}
+.menu-btn{display:block;}
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="nav-left">
+<label class="switch">
+<input type="checkbox" id="darkToggle">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="nav-center">
+<nav class="menu">
+<a href="index.html">الرئيسية</a>
+<a href="rooms.html">الغرف</a>
+<a href="services.html">الخدمات</a>
+<a href="booking.html">الحجز</a>
+<a href="reviews.html">آراء العملاء</a>
+<a href="contact.html">تواصل معنا</a>
+</nav>
+</div>
+
+<div class="nav-right">
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<div class="logo">
+<img src="logo.png">
+<span>VELORA HOTEL</span>
+</div>
+</div>
+
+</header>
+
+<div class="title-wrapper">
+<h2 class="title">Velora Reviews</h2>
+</div>
+
+<p class="reviews-text">آراء ضيوفنا هي انعكاس لتجربتنا الحقيقية</p>
+
+<div class="reviews-container" id="reviewsContainer"></div>
+
+<div class="add-review">
+<h3>أضف رأيك</h3>
+
+<input type="text" id="name" placeholder="اسمك">
+<select id="rating">
+<option value="5">★★★★★</option>
+<option value="4">★★★★</option>
+<option value="3">★★★</option>
+</select>
+
+<textarea id="comment" placeholder="اكتب رأيك"></textarea>
+
+<button onclick="addReview()">إضافة</button>
+</div>
+
+<script>
+
+const defaultReviews = [
+{name:"محمد علي", rating:5, comment:"الغرف جميلة ومريحة جدًا"},
+{name:"أحمد حسن", rating:5, comment:"خدمة ممتازة"},
+{name:"عزة محمد", rating:5, comment:"إقامة رائعة"},
+{name:"نورهان حسن", rating:5, comment:"مكان هادئ"},
+{name:"محمود علي", rating:5, comment:"نظيف جدًا"},
+{name:"أحمد خالد", rating:5, comment:"أفضل فندق"}
+];
+
+function loadReviews(){
+let saved = JSON.parse(localStorage.getItem("reviews"));
+
+if(!saved){
+localStorage.setItem("reviews", JSON.stringify(defaultReviews));
+saved = defaultReviews;
+}
+
+const container = document.getElementById("reviewsContainer");
+container.innerHTML="";
+
+saved.forEach(r=>{
+container.innerHTML += `
+<div class="review-card">
+<h3>${r.name}</h3>
+<div class="stars">${"★".repeat(r.rating)}</div>
+<p>${r.comment}</p>
+</div>
+`;
+});
+}
+
+function addReview(){
+let name = document.getElementById("name").value;
+let rating = document.getElementById("rating").value;
+let comment = document.getElementById("comment").value;
+
+if(!name || !comment){
+alert("اكتب البيانات");
+return;
+}
+
+let reviews = JSON.parse(localStorage.getItem("reviews"));
+reviews.unshift({name, rating, comment});
+
+localStorage.setItem("reviews", JSON.stringify(reviews));
+
+document.getElementById("name").value="";
+document.getElementById("comment").value="";
+
+loadReviews();
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+const toggle = document.getElementById("darkToggle");
+
+if(localStorage.getItem("theme")==="dark"){
+document.body.classList.add("dark");
+toggle.checked=true;
+}
+
+toggle.addEventListener("change", function(){
+document.body.classList.toggle("dark");
+localStorage.setItem("theme",
+document.body.classList.contains("dark")?"dark":"light");
+});
+});
+
+function toggleMenu(){
+document.querySelector(".menu").classList.toggle("active");
+}
+
+loadReviews();
+
+</script>
+
+</body>
+</html>
